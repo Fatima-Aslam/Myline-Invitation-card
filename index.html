@@ -9,40 +9,56 @@
 
     <script>
 
-      const avatarVideo = document.querySelector("#videoIntro");
-      const avatarImg = document.querySelector("#avatar");
-      const logoButton = document.querySelector("#logo"); 
-      
       var SongTune = new Howl({
-        src: [
-          "avatar-audio.mp3",
-        ],
-         onend: function () {
-          console.log("Finished!");
-          onEnd();
-        },
-      });
+          src: [
+            "avatar-audio.mp3",
+          ],
+           onend: function () {
+            console.log("Finished!");
+            onEnd();
+          },
+        });
 
-      const onEnd = () => {
-              SongTune.pause();
+       const onEnd = () => {
+                SongTune.pause();
+                var videoElement = document.getElementById("Bunny");
+                videoElement.pause();
+
+                const avatarVideo = document.querySelector("#videoIntro");
+                const avatarImg = document.querySelector("#avatar");
+                const logoButton = document.querySelector("#logo");
+         
+                avatarVideo.setAttribute("visible", false);
+                avatarImg.setAttribute("visible", true);
+                logoButton.setAttribute("visible", true);
+        };
+
+       const onFound = () => {
+                SongTune.play();
+                var videoElement = document.getElementById("Bunny");
+                videoElement.play();
+        };
+
+       const onLost = () => {
               var videoElement = document.getElementById("Bunny");
               videoElement.pause();
-              avatarVideo.setAttribute("visible", false);
-              avatarImg.setAttribute("visible", true);
-              logoButton.setAttribute("visible", true);
-      };
+              SongTune.pause();
+        };
       
-      const onFound = () => {
-              SongTune.play();
-              var videoElement = document.getElementById("Bunny");
-              videoElement.play();
-      };
+      const showInfo = () => {
+          
+        const avatarVideo = document.querySelector("#videoIntro");
+        const avatarImg = document.querySelector("#avatar");
+        const logoButton = document.querySelector("#logo"); 
+        let currentTab = "";
+
+        logoButton.addEventListener("click", function (evt) {
+          sound.pause();
+          window.location.href="https://myline-tickets.de/";
+          currentTab = 'myline website';
+        });
       
-      const onLost = () => {
-            var videoElement = document.getElementById("Bunny");
-            videoElement.pause();
-            SongTune.pause();
-      };
+      }
       
       AFRAME.registerComponent("mytarget", {
           init: function () {
