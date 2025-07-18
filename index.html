@@ -8,13 +8,27 @@
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
 
     <script>
+
+      const avatarVideo = document.querySelector("#videoIntro");
+      const avatarImg = document.querySelector("#avatar");
+      const logoButton = document.querySelector("#logo"); 
       
       var SongTune = new Howl({
         src: [
           "avatar-audio.mp3",
         ],
-         loop: true,
+         onend: function () {
+          console.log("Finished!");
+          onEnd();
+        },
       });
+
+      const onEnd = () => {
+              SongTune.pause();
+              var videoElement = document.getElementById("Bunny");
+              videoElement.pause();
+              avatarVideo.setAttribute("visible", false);
+      };
       
       const onFound = () => {
               SongTune.play();
@@ -142,6 +156,15 @@
           muted="true"
           src="avatar-video.mp4"
         ></video>
+
+        <img
+          id="avatar-img"
+          src="avatar.png"
+        />
+        <img
+          id="logo-btn"
+          src="logo.png"
+        />
         
       </a-assets>
 
@@ -165,6 +188,24 @@
           visible="true"
           loop="false"
         ></a-video>
+
+        <a-image
+          id="avatar"
+          src="#avatar-img"
+          scale="2 2 2"
+          position="0 0 0"
+          visible="true"
+        ></a-image>
+
+        <a-image
+          id="logo"
+          class="clickable"
+          src="#logo-btn"
+          height="0.15" width="0.15"
+          position="0 0.5 0"
+          visible="true"
+          animation="property: scale; to: 1.2 1.2 1.2; dur: 1000; easing: easeInOutQuad; loop: true; dir: alternate"
+        ></a-image>
         
       </a-entity>
     </a-scene>
