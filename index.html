@@ -32,8 +32,8 @@
       const onFound = () => {
         const avatarVideo = document.querySelector("#videoIntro");
         const avatarImg = document.querySelector("#avatar");
-        var videoElement = document.getElementById("Bunny");
         const logo = document.querySelector("#logo");
+        var videoElement = document.getElementById("Bunny");
 
         avatarVideo.setAttribute("visible", true);
         logo.setAttribute("visible", true);
@@ -42,44 +42,53 @@
         SongTune.play();
         videoElement.play();
 
-        // Shine & Pulse animation using GSAP
-        gsap.fromTo("#logo",
-          { scale: 1, opacity: 0.8 },
-          {
-            scale: 1.3,
-            opacity: 1,
-            duration: 0.8,
+        // Pulse animation
+        gsap.to(logo.object3D.scale, {
+          x: 1.3,
+          y: 1.3,
+          z: 1.3,
+          duration: 0.6,
+          repeat: -1,
+          yoyo: true,
+          ease: "power1.inOut",
+        });
+
+        // Shine flicker (opacity)
+        const mesh = logo.getObject3D('mesh');
+        if (mesh && mesh.material) {
+          gsap.to(mesh.material, {
+            opacity: 0.6,
+            duration: 0.6,
             repeat: -1,
             yoyo: true,
-            ease: "power1.inOut",
-            onUpdate: () => {
-              const shineLevel = Math.floor(Math.random() * 20) + 10;
-              document.getElementById("logo").style.filter = `drop-shadow(0 0 ${shineLevel}px #ffffff)`;
-            }
-          }
-        );
+            ease: "sine.inOut"
+          });
+        }
       };
 
       const onLost = () => {
         const avatarVideo = document.querySelector("#videoIntro");
+        const logo = document.querySelector("#logo");
+
         avatarVideo.setAttribute("visible", false);
+        logo.setAttribute("visible", false);
 
         var videoElement = document.getElementById("Bunny");
         videoElement.pause();
         SongTune.pause();
 
-        // Stop animation
-        gsap.killTweensOf("#logo");
-        document.getElementById("logo").style.filter = "drop-shadow(0 0 8px #ffffff)";
+        gsap.killTweensOf(logo.object3D.scale);
+        const mesh = logo.getObject3D('mesh');
+        if (mesh && mesh.material) {
+          gsap.killTweensOf(mesh.material);
+          mesh.material.opacity = 1; // Reset opacity
+        }
       };
 
       const showInfo = () => {
         const logoTapButton = document.querySelector("#logo");
-        let currentTab = "";
-
         logoTapButton.addEventListener("click", function () {
           window.location.href = "https://myline-tickets.de/";
-          currentTab = "myline website";
         });
       };
 
@@ -151,7 +160,7 @@
         align-self: center;
       }
 
-      #example-scanning-overlay .inner .scanline {
+      #example-scanning-overlay .scanline {
         position: absolute;
         width: 100%;
         height: 10px;
@@ -160,17 +169,12 @@
       }
 
       @keyframes move {
-        0%,
-        100% {
-          top: 0%;
-        }
-        50% {
-          top: calc(100% - 10px);
-        }
+        0%, 100% { top: 0%; }
+        50% { top: calc(100% - 10px); }
       }
 
+      /* Optional CSS effect for debug or shine */
       #logo {
-        filter: drop-shadow(0 0 8px #ffffff);
         transition: filter 0.3s ease;
       }
     </style>
@@ -185,7 +189,7 @@
     </div>
 
     <a-scene
-      mindar-image="uiScanning: #example-scanning-overlay;imageTargetSrc: targets.mind;filterMinCF:0.0001;filterBeta:0.001;"
+      mindar-image="uiScanning: #example-scanning-overlay; imageTargetSrc: targets.mind; filterMinCF: 0.0001; filterBeta: 0.001;"
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
@@ -243,7 +247,7 @@
           width="0.5"
           position="0 1.3 0"
           visible="false"
-          material="transparent: true; alphaTest: 0.01"
+          material="transparent: true; alphaTest: 0.01; opacity: 1"
         ></a-image>
       </a-entity>
     </a-scene>
