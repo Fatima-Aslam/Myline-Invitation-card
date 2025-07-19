@@ -28,7 +28,7 @@
                 const avatarImg = document.querySelector("#avatar");
          
                 avatarVideo.setAttribute("visible", false);
-                avatarImg.setAttribute("visible", true);
+                // avatarImg.setAttribute("visible", true);
         };
 
        const onFound = () => {
@@ -38,20 +38,20 @@
                 const logo = document.querySelector("#logo");
 
                 avatarVideo.setAttribute("visible", true);
-                avatarImg.setAttribute("visible", false);
+                // avatarImg.setAttribute("visible", false);
          
                 SongTune.play();
                 videoElement.play();
 
-                // Add animation dynamically
-                logo.setAttribute("animation", {
-                  property: "scale",
-                  to: "1.5 1.5 1.5",
-                  dur: 5000,
-                  easing: "easeInOutQuad",
-                  loop: false,
-                  dir: "alternate",
-                });
+                // // Add animation dynamically
+                // logo.setAttribute("animation", {
+                //   property: "scale",
+                //   to: "1.5 1.5 1.5",
+                //   dur: 5000,
+                //   easing: "easeInOutQuad",
+                //   loop: false,
+                //   dir: "alternate",
+                // });
         };
 
        const onLost = () => {
@@ -59,7 +59,7 @@
               const avatarImg = document.querySelector("#avatar");
          
               avatarVideo.setAttribute("visible", false);
-              avatarImg.setAttribute("visible", true);
+              // avatarImg.setAttribute("visible", true);
          
               var videoElement = document.getElementById("Bunny");
               videoElement.pause();
@@ -232,7 +232,7 @@
           src="#avatar-img"
           scale="2 2 2"
           position="0 0 0"
-          visible="false"
+          visible="true"
           material="transparent: true; alphaTest: 0.01"
         ></a-image>
 
