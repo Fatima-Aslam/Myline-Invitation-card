@@ -38,6 +38,7 @@
                 const logo = document.querySelector("#logo");
 
                 avatarVideo.setAttribute("visible", true);
+                logo.setAttribute("visible", true);
                 avatarImg.setAttribute("visible", false);
          
                 SongTune.play();
@@ -56,10 +57,8 @@
 
        const onLost = () => {
               const avatarVideo = document.querySelector("#videoIntro");
-              const avatarImg = document.querySelector("#avatar");
          
               avatarVideo.setAttribute("visible", false);
-              avatarImg.setAttribute("visible", true);
          
               var videoElement = document.getElementById("Bunny");
               videoElement.pause();
@@ -242,7 +241,7 @@
           src="#logo-btn"
           height="0.5" width="0.5"
           position="0 1.1 0.5"
-          visible="true"
+          visible="false"
           material="transparent: true; alphaTest: 0.01"
         ></a-image>
         
